@@ -2,14 +2,16 @@
 export default {
   name: "Index",
   mounted() {
-    $(document).trigger('change')
+    $(document).trigger('refresh')
     this.getProducts()
+    this.getFilterList()
   },
 
   data() {
     return {
       products: [],
       popupProduct: null,
+      filterList: []
     }
   },
 
@@ -18,24 +20,50 @@ export default {
       this.axios.get('http://localhost:8876/api/products')
           .then( res => {
             this.products = res.data.data
-            console.log(res)
+            // console.log(res)
           })
           .finally( v => {
             // crutches for make jQuery work
-            $(document).trigger('change')
+            $(document).trigger('refresh')
           })
     },
     getProduct(id) {
       this.axios.get(`http://localhost:8876/api/products/${id}`)
           .then( res => {
-            console.log(res.data.data)
+            // console.log(res.data.data)
             this.popupProduct = res.data.data
           })
           .finally( v => {
             // crutches for make jQuery work
-            $(document).trigger('change')
+            $(document).trigger('refresh')
           })
-    }
+    },
+    getFilterList() {
+      this.axios.get(`http://localhost:8876/api/products/filters`)
+          .then( res => {
+            console.log(res.data)
+            this.filterList = res.data
+
+            //  Price Filter
+            if ($("#price-range").length) {
+              $("#price-range").slider({
+                range: true,
+                min: this.filterList.price.min,
+                max: this.filterList.price.max,
+                values: [this.filterList.price.min, this.filterList.price.max],
+                slide: function (event, ui) {
+                  $("#priceRange").val("$" + ui.values[0] + " - $" + ui.values[1]);
+                }
+              });
+              $("#priceRange").val("$" + $("#price-range").slider("values", 0) + " - $" + $("#price-range").slider("values", 1));
+            }
+
+          })
+          .finally( v => {
+            // crutches for make jQuery work
+            $(document).trigger('refresh')
+          })
+    },
   }
 }
 </script>
@@ -142,37 +170,18 @@ export default {
                     <h4>Select Categories</h4>
                     <div class="checkbox-item">
                       <form>
-                        <div class="form-group"> <input type="checkbox" id="bedroom"> <label
-                            for="bedroom">Bedroom</label> </div>
-                        <div class="form-group"> <input type="checkbox" id="decoration"> <label
-                            for="decoration">Decoration</label> </div>
-                        <div class="form-group"> <input type="checkbox" id="kitchen"> <label
-                            for="kitchen">Kitchen</label> </div>
-                        <div class="form-group"> <input type="checkbox" id="clothing"> <label
-                            for="clothing">Clothing</label> </div>
-                        <div class="form-group"> <input type="checkbox" id="office"> <label
-                            for="office">Office</label> </div>
-                        <div class="form-group m-0"> <input type="checkbox" id="lighting"> <label
-                            for="lighting">Lighting</label> </div>
+                        <div v-for="category in filterList.categories" class="form-group"> <input type="checkbox" :id="`${category.title}${category.id}`"> <label
+                            :for="`${category.title}${category.id}`">{{ category.title }}</label> </div>
                       </form>
                     </div>
                   </div>
                   <div class="single-sidebar-box mt-30 wow fadeInUp animated">
                     <h4>Color Option </h4>
                     <ul class="color-option">
-                      <li> <a href="#0" class="color-option-single"> <span> Black</span> </a> </li>
-                      <li> <a href="#0" class="color-option-single bg2"> <span> Yellow</span> </a>
-                      </li>
-                      <li> <a href="#0" class="color-option-single bg3"> <span> Red</span> </a> </li>
-                      <li> <a href="#0" class="color-option-single bg4"> <span> Blue</span> </a> </li>
-                      <li> <a href="#0" class="color-option-single bg5"> <span> Green</span> </a>
-                      </li>
-                      <li> <a href="#0" class="color-option-single bg6"> <span> Olive</span> </a>
-                      </li>
-                      <li> <a href="#0" class="color-option-single bg7"> <span> Lime</span> </a> </li>
-                      <li> <a href="#0" class="color-option-single bg8"> <span> Pink</span> </a> </li>
-                      <li> <a href="#0" class="color-option-single bg9"> <span> Cyan</span> </a> </li>
-                      <li> <a href="#0" class="color-option-single bg10"> <span> Magenta</span> </a>
+                      <li v-for="color in filterList.colors">
+                        <a :href="`#${color.title}${color.id}`" :style="`background: #${color.title}`" class="color-option-single">
+                          <span> {{ color.title }}</span>
+                        </a>
                       </li>
                     </ul>
                   </div>
@@ -188,20 +197,7 @@ export default {
                   <div class="single-sidebar-box mt-30 wow fadeInUp animated pb-0 border-bottom-0 ">
                     <h4>Tags </h4>
                     <ul class="popular-tag">
-                      <li><a href="#0">Tools</a></li>
-                      <li><a href="#0">Store</a></li>
-                      <li><a href="#0">Decoration</a></li>
-                      <li><a href="#0">Online</a></li>
-                      <li><a href="#0">Furnitures</a></li>
-                      <li><a href="#0">Beauty</a></li>
-                      <li><a href="#0">Fashion</a></li>
-                      <li><a href="#0">Office</a></li>
-                      <li><a href="#0">Clothing</a></li>
-                      <li><a href="#0">Interior</a></li>
-                      <li><a href="#0">Good</a></li>
-                      <li><a href="#0">Standard</a></li>
-                      <li><a href="#0">Chair’s</a></li>
-                      <li><a href="#0">Living Room</a></li>
+                      <li v-for="tag in filterList.tags"><a :href="`#${tag.title}${tag.id}`">{{ tag.title }}</a></li>
                     </ul>
                   </div>
                 </div>
