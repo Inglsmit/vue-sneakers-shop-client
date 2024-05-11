@@ -11,13 +11,51 @@ export default {
     return {
       products: [],
       popupProduct: null,
-      filterList: []
+      filterList: [],
+      categories: [],
+      colors: [],
+      tags: [],
+      prices: [],
     }
   },
 
   methods: {
+    addColor(id){
+      if(!this.colors.includes(id)){
+        this.colors.push(id)
+      } else {
+        this.colors = this.colors.filter( el => {
+          return el !== id
+        })
+      }
+    },
+
+    addTag(id){
+      if(!this.tags.includes(id)){
+        this.tags.push(id)
+      } else {
+        this.tags = this.tags.filter( el => {
+          return el !== id
+        })
+      }
+    },
+
+    filterProducts(){
+      let prices = $('#priceRange').val()
+
+      this.prices = prices.replace(/[\s+]|[$]/g, '').split('-')
+
+      this.getProducts()
+
+    },
+
     getProducts() {
-      this.axios.get('http://localhost:8876/api/products')
+      this.axios.post('http://localhost:8876/api/products', {
+        'categories': this.categories,
+        'colors': this.colors,
+        'tags': this.tags,
+        'prices': this.prices,
+      })
           .then( res => {
             this.products = res.data.data
             // console.log(res)
@@ -27,6 +65,7 @@ export default {
             $(document).trigger('refresh')
           })
     },
+
     getProduct(id) {
       this.axios.get(`http://localhost:8876/api/products/${id}`)
           .then( res => {
@@ -170,8 +209,10 @@ export default {
                     <h4>Select Categories</h4>
                     <div class="checkbox-item">
                       <form>
-                        <div v-for="category in filterList.categories" class="form-group"> <input type="checkbox" :id="`${category.title}${category.id}`"> <label
-                            :for="`${category.title}${category.id}`">{{ category.title }}</label> </div>
+                        <div v-for="category in filterList.categories" class="form-group">
+                          <input v-model="categories" :value="category.id" type="checkbox" :id="`${category.title}${category.id}`">
+                          <label :for="`${category.title}${category.id}`">{{ category.title }}</label>
+                        </div>
                       </form>
                     </div>
                   </div>
@@ -179,7 +220,7 @@ export default {
                     <h4>Color Option </h4>
                     <ul class="color-option">
                       <li v-for="color in filterList.colors">
-                        <a :href="`#${color.title}${color.id}`" :style="`background: #${color.title}`" class="color-option-single">
+                        <a @click.prevent="addColor(color.id)" :href="`#${color.title}${color.id}`" :style="`background: #${color.title}`" class="color-option-single">
                           <span> {{ color.title }}</span>
                         </a>
                       </li>
@@ -189,15 +230,18 @@ export default {
                     <h4>Filter By Price</h4>
                     <div class="slider-box">
                       <div id="price-range" class="slider"></div>
-                      <div class="output-price"> <label for="priceRange">Price:</label> <input
-                          type="text" id="priceRange" readonly> </div> <button class="filterbtn"
-                                                                               type="submit"> Filter </button>
+                      <div class="output-price"> <label for="priceRange">Price:</label>
+                        <input type="text" id="priceRange" readonly>
+                      </div>
+                      <button @click.prevent="filterProducts" class="filterbtn" type="submit">Filter</button>
                     </div>
                   </div>
                   <div class="single-sidebar-box mt-30 wow fadeInUp animated pb-0 border-bottom-0 ">
                     <h4>Tags </h4>
                     <ul class="popular-tag">
-                      <li v-for="tag in filterList.tags"><a :href="`#${tag.title}${tag.id}`">{{ tag.title }}</a></li>
+                      <li v-for="tag in filterList.tags">
+                        <a @click.prevent="addTag(tag.id)" :href="`#${tag.title}${tag.id}`">{{ tag.title }}</a>
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -273,10 +317,12 @@ export default {
                                   <li><a href="wishlist.html"> <i class="flaticon-heart">
                                   </i> <span>
                                                                             wishlist</span> </a> </li>
-                                  <li><a href="compare.html"> <i
-                                      class="flaticon-left-and-right-arrows"></i>
-                                    <span>
-                                                                            compare</span> </a> </li>
+                                  <li>
+                                    <a href="compare.html">
+                                      <i class="flaticon-left-and-right-arrows"></i>
+                                      <span>compare</span>
+                                    </a>
+                                  </li>
                                   <li><a @click="getProduct(product.id)" :href="`#popup${product.id}`" class="popup_link"> <i
                                       class="flaticon-visibility"></i>
                                     <span> quick view</span>
