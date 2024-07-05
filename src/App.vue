@@ -13,7 +13,7 @@
                     <div class="menu-info d-flex justify-content-between align-items-center">
                       <div class="menubar"><span></span> <span></span> <span></span></div>
                       <a
-                          href="index.html" class="logo"> <img src="src/assets/images/logo/logo.png"
+                          href="index.html" class="logo"> <img src="/src/assets/images/logo/logo.png"
                                                                alt=""> </a>
                       <div class="cart-holder">
                         <a href="#0" class="cart cart-icon position-relative">
@@ -53,7 +53,7 @@
           <div class="d-lg-block d-none">
             <div class="row g-0 position-relative">
               <div class="col-lg-3 d-flex align-items-center justify-content-center border-rit ">
-                <div class="logo"><a href="index.html"> <img src="src/assets/images/logo/logo.png" alt=""> </a>
+                <div class="logo"><a href="index.html"> <img src="/src/assets/images/logo/logo.png" alt=""> </a>
                 </div>
               </div>
               <div class="col-lg-9 g-0 p-0">
@@ -130,7 +130,7 @@
                 <div class="menu-info d-flex justify-content-between align-items-center">
                   <div class="menubar"><span></span> <span></span> <span></span></div>
                   <a
-                      href="index.html" class="logo"> <img src="src/assets/images/logo/logo.png" alt="">
+                      href="index.html" class="logo"> <img src="/src/assets/images/logo/logo.png" alt="">
                   </a>
                   <div class="cart-holder">
                     <a href="#0" class="cart cart-icon position-relative">
@@ -144,7 +144,7 @@
         </div>
         <div class="container position-relative d-lg-block d-none">
           <div class="d-flex align-items-center justify-content-between"><a href="index.html" class="logo me-2">
-            <img src="src/assets/images/logo/logo.png" alt=""> </a>
+            <img src="/src/assets/images/logo/logo.png" alt=""> </a>
             <div class="mega-menu-default mega-menu d-lg-block d-none">
               <div class="container ">
                 <div class="row">
@@ -167,6 +167,84 @@
           </div>
         </div>
       </div>
+
+      <div class="side-cart-closer"></div>
+      <div class="side-cart d-flex flex-column justify-content-between">
+        <div class="top">
+          <div class="content d-flex justify-content-between align-items-center">
+            <h6 class="text-uppercase">Your Cart (03)</h6> <span class="cart-close text-uppercase">X</span>
+          </div>
+          <div class="cart_items">
+            <div class="items d-flex justify-content-between align-items-center">
+              <div class="left d-flex align-items-center"> <a href="shop-details-1.html"
+                                                              class="thumb d-flex justify-content-between align-items-center"> <img
+                  src="assets/images/shop/products-img1.jpg" alt=""> </a>
+                <div class="text"> <a href="shop-details-1.html">
+                  <h6>Diamond Bracelet</h6>
+                </a>
+                  <p>2 X <span>$350.00</span> </p>
+                </div>
+              </div>
+              <div class="right">
+                <div class="item-remove"> <i class="flaticon-cross"></i> </div>
+              </div>
+            </div>
+            <div class="items d-flex justify-content-between align-items-center">
+              <div class="left d-flex align-items-center"> <a href="shop-details-1.html"
+                                                              class="thumb d-flex justify-content-between align-items-center"> <img
+                  src="assets/images/shop/products-img2.jpg" alt=""> </a>
+                <div class="text"> <a href="shop-details-1.html">
+                  <h6>Blacked Neckles </h6>
+                </a>
+                  <p>1 X <span>$150.00</span> </p>
+                </div>
+              </div>
+              <div class="right">
+                <div class="item-remove"> <i class="flaticon-cross"></i> </div>
+              </div>
+            </div>
+            <div class="items d-flex justify-content-between align-items-center">
+              <div class="left d-flex align-items-center"> <a href="shop-details-1.html"
+                                                              class="thumb d-flex justify-content-between align-items-center"> <img
+                  src="assets/images/shop/products-img3.jpg" alt=""> </a>
+                <div class="text"> <a href="shop-details-1.html">
+                  <h6>Diamond Ring </h6>
+                </a>
+                  <p>1 X <span>$200.00</span> </p>
+                </div>
+              </div>
+              <div class="right">
+                <div class="item-remove"> <i class="flaticon-cross"></i> </div>
+              </div>
+            </div>
+            <div class="items d-flex justify-content-between align-items-center">
+              <div class="left d-flex align-items-center"> <a href="shop-details-2.html"
+                                                              class="thumb d-flex justify-content-between align-items-center"> <img
+                  src="assets/images/shop/products-img4.jpg" alt=""> </a>
+                <div class="text"> <a href="shop-details-1.html">
+                  <h6>Women Earring</h6>
+                </a>
+                  <p>1 X <span>$150.00</span> </p>
+                </div>
+              </div>
+              <div class="right">
+                <div class="item-remove"> <i class="flaticon-cross"></i> </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bottom">
+          <div class="total-ammount d-flex justify-content-between align-items-center">
+            <h6 class="text-uppercase">Total:</h6>
+            <h6 class="ammount text-uppercase">$850.00</h6>
+          </div>
+          <div class="button-box d-flex justify-content-between">
+            <router-link :to="{name: 'cart.index'}" class="btn_black"> View Cart </router-link>
+            <router-link :to="{name: 'cart.index'}" class="button-2 btn_theme"> Chekout </router-link>
+          </div>
+        </div>
+      </div>
+
       <div class="sidebar-content-closer"></div>
       <div class="sidebar-content">
         <div class="sidebar-widget-container">
@@ -175,7 +253,7 @@
           <div class="sidebar-textwidget">
             <div class="sidebar-info-contents">
               <div class="content-inner">
-                <div class="logo"><a href="index.html"><img src="src/assets/images/logo/logo-2.png" alt=""></a>
+                <div class="logo"><a href="index.html"><img src="/src/assets/images/logo/logo-2.png" alt=""></a>
                 </div>
                 <div class="content-box">
                   <h4>About Us</h4>
@@ -235,7 +313,7 @@
 
     <!--  Footer Three start -->
     <footer class="footer-default footer-3 ">
-      <div class="footer-default__shap_1 position-absolute "><img src="src/assets/images/shape/footer-shape-1.png"
+      <div class="footer-default__shap_1 position-absolute "><img src="/src/assets/images/shape/footer-shape-1.png"
                                                                   alt=""></div>
       <!--Start Footer-->
       <div class="footer-default__main-footer position-relative">
@@ -332,10 +410,10 @@
               <p>© 2022 <a href="index.html">Karte.</a> All Rights Reserved.</p>
             </div>
             <div class="footer-payment wow fadeInUp animated">
-              <a href="#0"> <img src="src/assets/images/home-four/method-1.jpg" alt="payment"> </a>
-              <a href="#0"> <img src="src/assets/images/home-four/method-2.jpg" alt="payment"> </a>
-              <a href="#0"> <img src="src/assets/images/home-four/method-3.jpg" alt="payment"> </a>
-              <a href="#0"> <img src="src/assets/images/home-four/method-4.jpg" alt="payment"> </a>
+              <a href="#0"> <img src="/src/assets/images/home-four/method-1.jpg" alt="payment"> </a>
+              <a href="#0"> <img src="/src/assets/images/home-four/method-2.jpg" alt="payment"> </a>
+              <a href="#0"> <img src="/src/assets/images/home-four/method-3.jpg" alt="payment"> </a>
+              <a href="#0"> <img src="/src/assets/images/home-four/method-4.jpg" alt="payment"> </a>
             </div>
           </div>
         </div>

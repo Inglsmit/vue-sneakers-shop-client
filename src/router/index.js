@@ -7,12 +7,22 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('../views/main/index.vue')
+      component: () => import('../views/main/Index.vue')
     },
     {
       path: '/products',
-      name: 'products',
-      component: () => import('../views/product/index.vue')
+      name: 'products.index',
+      component: () => import('../views/product/Index.vue')
+    },
+    {
+      path: '/products/:id',
+      name: 'products.show',
+      component: () => import('../views/product/Show.vue')
+    },
+    {
+      path: '/cart',
+      name: 'cart.index',
+      component: () => import('../views/cart/Index.vue')
     },
   ]
 })

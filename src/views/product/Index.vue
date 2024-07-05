@@ -21,6 +21,35 @@ export default {
   },
 
   methods: {
+    addToCart(product){
+      let cartStorage = localStorage.getItem('cart')
+      let qtyEl = document.querySelector('.qtyValue');
+      let qty = qtyEl ? Number(qtyEl.value) : 1;
+      let newProduct = {
+          'id': product.id,
+          'title': product.title,
+          'image_url': product.image_url,
+          'price': product.price,
+          'qty': qty
+        }
+      if(qtyEl) qtyEl.value = Number(1)
+
+      if(!cartStorage){
+        localStorage.setItem('cart', JSON.stringify([newProduct]))
+      }else{
+        cartStorage = JSON.parse(cartStorage)
+        let existingProduct = cartStorage.find(storageProduct => storageProduct.id === product.id);
+
+        if (existingProduct) {
+          existingProduct.qty += qty;
+        } else {
+          cartStorage.push(newProduct);
+        }
+
+        localStorage.setItem('cart', JSON.stringify(cartStorage))
+      }
+    },
+
     addColor(id){
       if(!this.colors.includes(id)){
         this.colors.push(id)
@@ -304,17 +333,20 @@ export default {
                       <div class="row">
                         <div v-for="product in products" class="col-xl-4 col-lg-6 col-6 ">
                           <div class="products-three-single w-100  mt-30">
-                            <div class="products-three-single-img"> <a
-                                href="shop-details-3.html" class="d-block"> <img
+                            <div class="products-three-single-img">
+                              <router-link :to="{name: 'products.show', params: {id: product.id}}" class="d-block">
+                                <img
                                 :src="product.image_url"
                                 class="first-img" alt="" /> <img
                                 src="src/assets/images/home-three/productss2-hover-1.png"
                                 alt="" class="hover-img" />
-                            </a>
+                              </router-link>
                               <div class="products-grid-one__badge-box"> <span
                                   class="bg_base badge new ">New</span>
-                              </div> <a href="cart.html" class="addcart btn--primary style2">
-                                Add To Cart </a>
+                              </div>
+                              <a @click.prevent="addToCart(product)" href="#" class="addcart btn--primary style2">
+                                Add To Cart
+                              </a>
                               <div class="products-grid__usefull-links">
                                 <ul>
                                   <li><a href="wishlist.html"> <i class="flaticon-heart">
@@ -400,7 +432,7 @@ export default {
                                               <i class="flaticon-plus"></i>
                                             </span>
                                           </div>
-                                          <button class="btn--primary "> Add to Cart </button>
+                                          <button @click.prevent="addToCart(popupProduct)" class="btn--primary "> Add to Cart </button>
                                         </div>
                                       </div>
                                       <div class="payment-method"> <a href="#0"> <img
@@ -420,7 +452,8 @@ export default {
                               </div>
                             </div>
                             <div class="products-three-single-content text-center"> <span> {{ product.category.title }} </span>
-                              <h5><a href="shop-details-3.html"> {{ product.title }} </a>
+                              <h5>
+                                <router-link :to="{name: 'products.show', params: {id: product.id}}"> {{ product.title }} </router-link>
                               </h5>
                               <p><del>$200.00</del> ${{ product.price }}</p>
                             </div>
